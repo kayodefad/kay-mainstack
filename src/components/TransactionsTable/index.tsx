@@ -1,7 +1,18 @@
 /* eslint-disable no-nested-ternary */
+
+'use client';
+
 import { v4 as uuid } from 'uuid';
 import { capitalize, formatAmount } from '@/lib/utils';
 import dayjs from 'dayjs';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import ChevronDown from '../SVGs/ChevronDown';
 import DownloadIcon from '../SVGs/DownloadIcon';
 import { Button } from '../ui/button';
@@ -115,7 +126,11 @@ const renderStatus = (status: string) => {
 };
 
 const displaySubText = (transaction: any) => {
-  return transaction?.metadata?.name ? transaction?.metadata?.name : transaction?.status ? renderStatus(transaction?.status) : '--';
+  return transaction?.metadata?.name
+    ? transaction?.metadata?.name
+    : transaction?.status
+      ? renderStatus(transaction?.status)
+      : '--';
 };
 
 const TransactionsTable = () => {
@@ -128,11 +143,31 @@ const TransactionsTable = () => {
             <p className="text-sm font-medium text-[#56616B]">Your transactions for the last 7 days</p>
           </div>
           <div className="flex gap-3">
-            <Button variant="secondary" className="h-auto gap-1 rounded-full py-3 pl-[30px] pr-5 text-base font-semibold">
-              <span>Filter</span>
-              <ChevronDown />
-            </Button>
-            <Button variant="secondary" className="h-auto gap-1 rounded-full py-3 pl-[30px] pr-5 pr-5 text-base font-semibold">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="secondary"
+                  className="h-auto gap-1 rounded-full py-3 pl-[30px] pr-5 text-base font-semibold"
+                >
+                  <span>Filter</span>
+                  <ChevronDown />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="bottom-[2.5%] left-auto right-0 top-[2.5%] max-w-[450px] -translate-x-10 translate-y-0 !rounded-[20px] pt-6 !duration-700 data-[state=closed]:slide-out-to-right-[500px] data-[state=open]:slide-in-from-right-[500px]">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-bold text-[#131316]">Filter</DialogTitle>
+                  <DialogDescription>
+                    This action cannot be undone. This will permanently delete your account and remove your data from
+                    our servers.
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+
+            <Button
+              variant="secondary"
+              className="h-auto gap-1 rounded-full py-3 pl-[30px] pr-5 pr-5 text-base font-semibold"
+            >
               <span>Export list</span>
               <DownloadIcon />
             </Button>
@@ -144,7 +179,11 @@ const TransactionsTable = () => {
           return (
             <div key={uuid()} className="flex items-center justify-between">
               <div className="flex gap-3">
-                <div className={`flex h-12 w-12 items-center justify-center rounded-full ${transaction.type === 'withdrawal' ? 'bg-[#F9E3E0]' : 'bg-[#E3FCF2]'}`}>
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-full ${
+                    transaction.type === 'withdrawal' ? 'bg-[#F9E3E0]' : 'bg-[#E3FCF2]'
+                  }`}
+                >
                   {transaction.type === 'withdrawal' ? (
                     <span className="rotate-180">
                       <ArrowIcon fill="#961100" />
@@ -165,7 +204,9 @@ const TransactionsTable = () => {
                   <span>USD&nbsp;</span>
                   <span>{formatAmount(transaction?.amount || 0)}</span>
                 </p>
-                <p className="flex justify-end text-sm font-medium text-[#56616B]">{dayjs(transaction?.date || new Date().toLocaleString()).format('MMM DD, YYYY')}</p>
+                <p className="flex justify-end text-sm font-medium text-[#56616B]">
+                  {dayjs(transaction?.date || new Date().toLocaleString()).format('MMM DD, YYYY')}
+                </p>
               </div>
             </div>
           );

@@ -76,6 +76,9 @@ module.exports = {
         nav: '0px 2px 4px 0px rgba(45, 59, 67, 0.05), 0px 2px 6px 0px rgba(45, 59, 67, 0.06)',
         leftNav: '0px 6px 12px 0px rgba(92, 115, 131, 0.08), 0px 4px 8px 0px rgba(92, 115, 131, 0.08)',
       },
+      transitionDuration: {
+        3000: '3000ms',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
