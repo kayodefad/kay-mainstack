@@ -60,31 +60,34 @@ function Navbar() {
   const getActiveRoute = (link: Navlink) => (pathname.includes(`/${link.link}`) && link.link !== '/') || (pathname === '/' && link.link === '/');
 
   return (
-    <nav className="mx-[3%] mb-16 mt-3 flex items-center justify-between rounded-[100px] border-2 border-white bg-white py-4 pl-7 pr-8 shadow-nav">
-      <Link href="/">
-        <Logo />
-      </Link>
-      <ul className="flex items-center gap-6">
-        {navLinks.map((link) => (
-          <li key={uuid()}>
-            <Link href={link.link} className={`flex items-center gap-1 rounded-full px-[18px] py-2 ${getActiveRoute(link) ? 'bg-[#131316] text-white' : 'text-[#56616B] hover:bg-[#EEF1F6]'}`}>
-              {getActiveRoute(link) ? <span>{link.activeIcon}</span> : <span>{link.icon}</span>}
-              <span className="font-semibold">{link.name}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className="flex items-center gap-5">
-        <div className="flex items-center gap-7">
-          <NotifIcon />
-          <MessageIcon />
+    <div className="sticky top-0 z-10">
+      <div className="h-4 w-full bg-white" />
+      <nav className="mx-[3%] mb-16 flex items-center justify-between rounded-[100px] border-2 border-white bg-white py-4 pl-7 pr-8 shadow-nav">
+        <Link href="/">
+          <Logo />
+        </Link>
+        <ul className="flex items-center gap-6">
+          {navLinks.map((link) => (
+            <li key={uuid()}>
+              <Link href={link.link} className={`flex items-center gap-1 rounded-full px-[18px] py-2 ${getActiveRoute(link) ? 'bg-[#131316] text-white' : 'text-[#56616B] hover:bg-[#EEF1F6]'}`}>
+                {getActiveRoute(link) ? <span>{link.activeIcon}</span> : <span>{link.icon}</span>}
+                <span className="font-semibold">{link.name}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-7">
+            <NotifIcon />
+            <MessageIcon />
+          </div>
+          <div className="flex cursor-pointer items-center gap-2 rounded-full bg-[#EFF1F6] py-1 pl-[5px] pr-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#131316] text-white">OJ</div>
+            <MenuIcon />
+          </div>
         </div>
-        <div className="flex cursor-pointer items-center gap-2 rounded-full bg-[#EFF1F6] py-1 pl-[5px] pr-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#131316] text-white">OJ</div>
-          <MenuIcon />
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 }
 

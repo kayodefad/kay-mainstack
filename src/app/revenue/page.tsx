@@ -1,4 +1,5 @@
 import Revenue from '@/components/Revenue';
+import TransactionsTable from '@/components/TransactionsTable';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,9 +9,10 @@ export const metadata: Metadata = {
 
 function page() {
   return (
-    <div>
+    <>
       <Revenue />
-    </div>
+      <TransactionsTable />
+    </>
   );
 }
 

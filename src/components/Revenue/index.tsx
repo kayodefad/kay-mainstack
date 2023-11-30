@@ -1,5 +1,5 @@
-import RevenueLineChart from './RevenueLineChart';
-import WalletData from './WalletData';
+import RevenueLineChart from '../RevenueLineChart';
+import WalletData from '../WalletData';
 
 function Revenue() {
   return (
