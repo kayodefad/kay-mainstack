@@ -1,3 +1,4 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["airbnb", "airbnb/hooks", "eslint:recommended", "next", "next/core-web-vitals"],
+  "rules": { "react/jsx-filename-extension": "off", "react/require-default-props": "off", "import/extensions": "off", "react/function-component-definition": "off" }
 }
