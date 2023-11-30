@@ -7,9 +7,7 @@ function Revenue() {
       <div className="col-span-2">
         <RevenueLineChart />
       </div>
-      <div className="">
-        <WalletData />
-      </div>
+      <WalletData />
     </div>
   );
 }
