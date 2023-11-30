@@ -60,7 +60,7 @@ function Navbar() {
   const getActiveRoute = (link: Navlink) => (pathname.includes(`/${link.link}`) && link.link !== '/') || (pathname === '/' && link.link === '/');
 
   return (
-    <nav className="mx-5 mb-12 mt-3 flex items-center justify-between rounded-[100px] border-2 border-white bg-white py-4 pl-7 pr-8 shadow-nav">
+    <nav className="mx-[3%] mb-16 mt-3 flex items-center justify-between rounded-[100px] border-2 border-white bg-white py-4 pl-7 pr-8 shadow-nav">
       <Link href="/">
         <Logo />
       </Link>
@@ -74,9 +74,11 @@ function Navbar() {
           </li>
         ))}
       </ul>
-      <div className="flex items-center gap-7">
-        <NotifIcon />
-        <MessageIcon />
+      <div className="flex items-center gap-5">
+        <div className="flex items-center gap-7">
+          <NotifIcon />
+          <MessageIcon />
+        </div>
         <div className="flex cursor-pointer items-center gap-2 rounded-full bg-[#EFF1F6] py-1 pl-[5px] pr-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#131316] text-white">OJ</div>
           <MenuIcon />

@@ -1,4 +1,13 @@
 {
   "extends": ["airbnb", "airbnb/hooks", "eslint:recommended", "next", "next/core-web-vitals"],
-  "rules": { "react/jsx-filename-extension": "off", "react/require-default-props": "off", "import/extensions": "off", "react/function-component-definition": "off" }
+  "rules": {
+    "react/jsx-filename-extension": "off",
+    "react/require-default-props": "off",
+    "import/extensions": "off",
+    "react/function-component-definition": "off",
+    "max-len": "off",
+    "react/jsx-props-no-spreading": "off",
+    "object-curly-newline": "off",
+    "import/prefer-default-export": "off"
+  }
 }

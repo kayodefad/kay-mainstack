@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Navbar />
         <LeftNav />
-        <div className="px-36">{children}</div>
+        <div className="px-[12.5%]">{children}</div>
       </body>
     </html>
   );
