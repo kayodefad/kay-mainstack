@@ -1,11 +1,9 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable no-nested-ternary */
 
 'use client';
 
 import { v4 as uuid } from 'uuid';
-import { capitalize, cn, formatAmount } from '@/lib/utils';
-import dayjs from 'dayjs';
 import {
   Dialog,
   DialogClose,
@@ -19,112 +17,23 @@ import React from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ChevronDown } from 'lucide-react';
 import format from 'date-fns/format';
-import { startOfMonth, subDays, subMonths } from 'date-fns';
 import useGetTransactions, { TransactionType } from '@/hooks/queries/useGetTransactions';
+import { dateFilters, transactionStatusData, transactionTypesData } from '@/lib/data';
+import { cn } from '@/lib/utils';
 import DownloadIcon from '../SVGs/DownloadIcon';
 import { Button } from '../ui/button';
-import ArrowIcon from '../SVGs/ArrowIcon';
 import { Calendar } from '../ui/calendar';
 import MultiSelect, { OptionType } from '../MultiSelect';
-
-const renderStatus = (status: string) => {
-  let result;
-  switch (status) {
-    case 'successful':
-      result = <span className="text-[#0EA163]">{capitalize(status)}</span>;
-      break;
-    case 'pending':
-      result = <span className="text-[#A77A07]">{capitalize(status)}</span>;
-      break;
-    case 'failed':
-      result = <span className="text-[red]">{capitalize(status)}</span>;
-      break;
-    default:
-      result = <span>{capitalize(status)}</span>;
-  }
-  return result;
-};
-
-const displaySubText = (transaction: any) => {
-  return transaction?.metadata?.name
-    ? transaction?.metadata?.name
-    : transaction?.status
-      ? renderStatus(transaction?.status)
-      : '--';
-};
+import TransactionsList from '../TransactionsList';
 
 const TransactionsTable = () => {
   const [dateFrom, setDateFrom] = React.useState<Date>();
   const [dateTo, setDateTo] = React.useState<Date>();
-  const [transactionTypes, setTransactionTypes] = React.useState<OptionType[]>([
-    {
-      text: 'Store Transactions',
-      checked: false,
-    },
-    {
-      text: 'Get Tipped',
-      checked: false,
-    },
-    {
-      text: 'Withdrawals',
-      checked: false,
-    },
-    {
-      text: 'Chargebacks',
-      checked: false,
-    },
-    {
-      text: 'Cashbacks',
-      checked: false,
-    },
-    {
-      text: 'Refer & Earn',
-      checked: false,
-    },
-  ]);
-  const [transactionStatus, setTransactionStatus] = React.useState<OptionType[]>([
-    {
-      text: 'Successful',
-      checked: false,
-    },
-    {
-      text: 'Pending',
-      checked: false,
-    },
-    {
-      text: 'Failed',
-      checked: false,
-    },
-  ]);
+  const [transactionTypes, setTransactionTypes] = React.useState<OptionType[]>(transactionTypesData);
+  const [transactionStatus, setTransactionStatus] = React.useState<OptionType[]>(transactionStatusData);
 
-  const [fixedDateFilters, setFixedDateFilters] = React.useState<
-    { text: string; dateFrom: Date; dateTo: Date; selected: boolean }[]
-  >([
-    {
-      text: 'Today',
-      dateFrom: new Date(),
-      dateTo: new Date(),
-      selected: true,
-    },
-    {
-      text: 'Last 7 days',
-      dateFrom: subDays(new Date(), 7),
-      dateTo: new Date(),
-      selected: false,
-    },
-    {
-      text: 'This month',
-      dateFrom: startOfMonth(new Date()),
-      dateTo: new Date(),
-      selected: false,
-    },
-    {
-      text: 'Last 3 months',
-      dateFrom: subMonths(new Date(), 3),
-      dateTo: new Date(),
-      selected: false,
-    },
-  ]);
+  const [fixedDateFilters, setFixedDateFilters] =
+    React.useState<{ text: string; dateFrom: Date; dateTo: Date; selected: boolean }[]>(dateFilters);
 
   React.useEffect(() => {
     setDateFrom(fixedDateFilters[0].dateFrom);
@@ -156,10 +65,7 @@ const TransactionsTable = () => {
           <div className="flex gap-3">
             <Dialog>
               <DialogTrigger asChild>
-                <Button
-                  variant="secondary"
-                  className="h-auto gap-1 rounded-full px-[22px] py-3 text-base font-semibold"
-                >
+                <Button variant="secondary" className="h-auto gap-1 rounded-full px-[22px] py-3 text-base font-semibold">
                   <span>Filter</span>
                   <ChevronDown className="h-5 w-5" />
                 </Button>
@@ -275,11 +181,7 @@ const TransactionsTable = () => {
                 </DialogHeader>
                 <DialogFooter className="mt-auto flex">
                   <DialogClose asChild>
-                    <Button
-                      variant="ghost"
-                      className="h-[50px] flex-1 rounded-full border border-[#EFF1F6]"
-                      type="button"
-                    >
+                    <Button variant="ghost" className="h-[50px] flex-1 rounded-full border border-[#EFF1F6]" type="button">
                       Clear
                     </Button>
                   </DialogClose>
@@ -291,54 +193,14 @@ const TransactionsTable = () => {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            <Button
-              variant="secondary"
-              className="h-auto gap-1 rounded-full py-3 pl-[30px] pr-5 text-base font-semibold"
-            >
+            <Button variant="secondary" className="h-auto gap-1 rounded-full py-3 pl-[30px] pr-5 text-base font-semibold">
               <span>Export list</span>
               <DownloadIcon />
             </Button>
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-6">
-        {transactions.map((transaction) => {
-          return (
-            <div key={uuid()} className="flex items-center justify-between">
-              <div className="flex gap-3">
-                <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-full ${
-                    transaction.type === 'withdrawal' ? 'bg-[#F9E3E0]' : 'bg-[#E3FCF2]'
-                  }`}
-                >
-                  {transaction.type === 'withdrawal' ? (
-                    <span className="rotate-180">
-                      <ArrowIcon fill="#961100" />
-                    </span>
-                  ) : (
-                    <span>
-                      <ArrowIcon />
-                    </span>
-                  )}
-                </div>
-                <div className="flex flex-col justify-between font-medium">
-                  <p className="text-[#131316]">{transaction?.metadata?.product_name || '--'}</p>
-                  <p className="text-sm text-[#56616B]">{displaySubText(transaction)}</p>
-                </div>
-              </div>
-              <div>
-                <p className="flex justify-end font-bold text-[#131316]">
-                  <span>USD&nbsp;</span>
-                  <span>{formatAmount(transaction?.amount || 0)}</span>
-                </p>
-                <p className="flex justify-end text-sm font-medium text-[#56616B]">
-                  {dayjs(transaction?.date || new Date().toLocaleString()).format('MMM DD, YYYY')}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <TransactionsList />
     </div>
   );
 };
