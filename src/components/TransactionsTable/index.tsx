@@ -63,7 +63,7 @@ const TransactionsTable = () => {
             <p className="text-sm font-medium text-[#56616B]">Your transactions for the last 7 days</p>
           </div>
           <div className="flex gap-3">
-            <Dialog open>
+            <Dialog>
               <DialogTrigger asChild>
                 <Button variant="secondary" className="h-auto gap-1 rounded-full px-[22px] py-3 text-base font-semibold">
                   <span>Filter</span>
