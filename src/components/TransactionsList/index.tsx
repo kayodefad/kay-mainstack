@@ -42,6 +42,7 @@ const TransactionsList = () => {
       setTransactions(getTransactions.data!);
     }
   }, [getTransactions.isLoading]);
+
   return (
     <div className="flex flex-col gap-6">
       {transactions.map((transaction) => {

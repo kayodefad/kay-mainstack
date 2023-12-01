@@ -63,7 +63,7 @@ const TransactionsTable = () => {
             <p className="text-sm font-medium text-[#56616B]">Your transactions for the last 7 days</p>
           </div>
           <div className="flex gap-3">
-            <Dialog>
+            <Dialog open>
               <DialogTrigger asChild>
                 <Button variant="secondary" className="h-auto gap-1 rounded-full px-[22px] py-3 text-base font-semibold">
                   <span>Filter</span>
@@ -80,7 +80,7 @@ const TransactionsTable = () => {
                           type="button"
                           className={cn(
                             'cursor-pointer rounded-full border border-[#EFF1F6] px-[18px] py-[10px] text-[13px] font-semibold',
-                            filter.selected && 'bg-[#EEF1F6]',
+                            filter.selected && 'bg-accent',
                           )}
                           key={uuid()}
                           onClick={() => {
@@ -110,7 +110,7 @@ const TransactionsTable = () => {
                             <Button
                               variant="outline"
                               className={cn(
-                                'h-[44px] flex-1 justify-start rounded-xl text-left !text-sm font-normal',
+                                'h-[44px] flex-1 justify-start rounded-xl bg-accent text-left !text-sm font-normal hover:bg-background',
                                 !dateFrom && 'text-muted-foreground',
                               )}
                             >
@@ -137,7 +137,7 @@ const TransactionsTable = () => {
                             <Button
                               variant="outline"
                               className={cn(
-                                'h-[44px] flex-1 justify-start rounded-xl text-left !text-sm font-normal',
+                                'h-[44px] flex-1 justify-start rounded-xl bg-accent text-left !text-sm font-normal hover:bg-background',
                                 !dateTo && 'text-muted-foreground',
                               )}
                             >

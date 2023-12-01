@@ -30,7 +30,7 @@ const MultiSelect = ({ options, setOptions, placeholder = 'Select option' }: Mul
           <Button
             variant="outline"
             className={cn(
-              'flex h-[44px] w-full items-center justify-start gap-3 truncate whitespace-normal rounded-xl text-left !text-sm font-normal',
+              'flex h-[44px] w-full items-center justify-start gap-3 truncate whitespace-normal rounded-xl bg-accent text-left !text-sm font-normal hover:bg-background',
             )}
           >
             <span className="flex flex-1">
