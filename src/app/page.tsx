@@ -10,5 +10,9 @@ export default function Home() {
     router.push('/revenue');
   }, []);
 
-  return <main>home</main>;
+  return (
+    <main>
+      <h1>Home</h1>
+    </main>
+  );
 }
